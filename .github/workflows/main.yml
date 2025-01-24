@@ -23,6 +23,7 @@ jobs:
 
   image_push:
     runs-on: ubuntu-latest
+    needs: test
     steps:
       # build job soll den build ordner als artefakt hochladen
       # schritt 1: code auschecken
@@ -48,6 +49,7 @@ jobs:
 
   image_pull:
     runs-on: ubuntu-latest
+    needs: image_push
     steps:
       - name: dockerhub login
         run: docker login -u klatschenderaffe -p ${{vars.PASSWORD}}
