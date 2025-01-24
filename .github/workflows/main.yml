@@ -38,6 +38,9 @@ jobs:
       # schritt 3: abhängigkeiten installieren
       - name: Abhängigkeiten installieren
         run: npm install
+
+      - name: Dateipfad anzeigen
+        run: ls -la
       # schritt 4: Projekt-build bauen
       - name: Image erstellen
         run: docker buildx build -t klatschenderaffe/reactappimage ./app
