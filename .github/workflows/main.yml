@@ -40,12 +40,12 @@ jobs:
         run: npm install
       # schritt 4: Projekt-build bauen
       - name: Image erstellen
-        run: docker buildx build -t klatschenderaffe/React-App-Image .
+        run: docker buildx build -t klatschenderaffe/reactappimage .
       # schritt 5: build ergebnisse hochladen
       - name: dockerhub login
         run: docker login -u klatschenderaffe -p ${{vars.PASSWORD}}
       - name: Image pushen
-        run: docker push klatschenderaffe/React-App-Image
+        run: docker push klatschenderaffe/reactappimage
 
   image_pull:
     runs-on: ubuntu-latest
@@ -54,6 +54,6 @@ jobs:
       - name: dockerhub login
         run: docker login -u klatschenderaffe -p ${{vars.PASSWORD}}
       - name: Image pullen
-        run: docker pull klatschenderaffe/React-App-Image
+        run: docker pull klatschenderaffe/reactappimage
       - name: Container starten
-        run: docker run klatschenderaffe/React-App-Image:latest
+        run: docker run klatschenderaffe/reactappimage:latest
