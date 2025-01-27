@@ -9,6 +9,7 @@ env:
   CONTAINER_NAME: react-app
   ECS_SERVICE: React-App-Service
   ECS_CLUSTER: React-App
+  ECR_REPOSITORY: react-app-repo
 
 jobs:
   test:
@@ -85,7 +86,7 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: react-app-repo
+
           IMAGE_TAG: ${{ github.sha }}
         run: |
           # Build a docker container and
