@@ -80,7 +80,7 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: 'react-app-repo'
+          REPOSITORY: react-app-repo
           IMAGE_TAG: ${{ github.sha }}
         run: |
           # Build a docker container and
