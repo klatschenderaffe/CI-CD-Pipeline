@@ -94,7 +94,7 @@ jobs:
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@c804dfbdd57f713b6c079302a4c01db7017a36fc
         env:
-          ECS_TASK_DEFINITION: task-definition.json
+          ECS_TASK_DEFINITION: C:\Techstarter\21_DevOps\CI-CD\2025-01-23\my-money\.aws\task-definition.json
           CONTAINER_NAME: 'react-app'
         with:
           task-definition: ${{ env.ECS_TASK_DEFINITION }}
