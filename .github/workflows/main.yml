@@ -5,7 +5,7 @@ on:
       - main
 
 env:
-  ECS_TASK_DEFINITION: ./.aws/task-definition.json
+  ECS_TASK_DEFINITION: ./task-definition.json
   CONTAINER_NAME: react-app
   ECS_SERVICE: React-App-Service
   ECS_CLUSTER: React-App
@@ -97,21 +97,21 @@ jobs:
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        uses: aws-actions/amazon-ecs-render-task-definition@c804dfbdd57f713b6c079302a4c01db7017a36fc
         with:
           task-definition: ${{ env.ECS_TASK_DEFINITION }}
           container-name: ${{ env.CONTAINER_NAME }}
           image: ${{ steps.build-image.outputs.image }}
 
-      - name: Remove invalid fields from task definition
-        run: |
-          jq 'del(.enableFaultInjection)' ./.aws/task-definition.json > ./.aws/task-definition-cleaned.json
-          mv ./.aws/task-definition-cleaned.json ./.aws/task-definition.json
+      # - name: Remove invalid fields from task definition
+      #   run: |
+      #     jq 'del(.enableFaultInjection)' ./.aws/task-definition.json > ./.aws/task-definition-cleaned.json
+      #     mv ./.aws/task-definition-cleaned.json ./.aws/task-definition.json
 
       - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v2
+        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
         with:
-          task-definition: ${{ env.ECS_TASK_DEFINITION }}
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: ${{ env.ECS_SERVICE }}
           cluster: ${{ env.ECS_CLUSTER }}
           wait-for-service-stability: true
