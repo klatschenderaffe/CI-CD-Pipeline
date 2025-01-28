@@ -45,7 +45,10 @@ jobs:
 
       # Terraform initialisieren
       - name: Terraform Init
-        run: terraform init
+        run: |
+          cd ./terraform
+          ls -la
+          terraform init
 
       # Terraform Format prüfen
       - name: Terraform Format Check
