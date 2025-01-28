@@ -1,3 +1,25 @@
+# VPC
+resource "aws_vpc" "main" {
+  cidr_block           = "10.0.0.0/16"
+  enable_dns_hostnames = true
+  enable_dns_support   = true
+
+  tags = {
+    Name = "Docker-React"
+  }
+}
+
+
+# Internet Gateway
+resource "aws_internet_gateway" "gw" {
+  vpc_id = aws_vpc.main.id
+
+  tags = {
+    Name = "Docker-React VPC IG"
+  }
+}
+
+
 # Sicherheitsgruppe erstellen
 resource "aws_security_group" "docker_sg" {
   name        = "docker_security_group"
@@ -17,12 +39,12 @@ resource "aws_security_group" "docker_sg" {
     cidr_blocks = ["0.0.0.0/0"] # HTTP-Zugriff erlauben
   }
 
-  ingress {
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"] # HTTPS-Zugriff erlauben
-  }
+  # ingress {
+  #   from_port   = 443
+  #   to_port     = 443
+  #   protocol    = "tcp"
+  #   cidr_blocks = ["0.0.0.0/0"] # HTTPS-Zugriff erlauben
+  # }
 
   egress {
     from_port   = 0
