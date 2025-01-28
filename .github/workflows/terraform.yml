@@ -54,6 +54,10 @@ jobs:
         if: github.event_name == 'pull_request'
         run: terraform plan -no-color -out=tfplan
 
+        # Dateipfad anzeigen lassen um tfplan datei zu finden
+      - name: Dateipfade anzeigen lassen
+        run: ls -la
+
       # Terraform Apply ausführen (bei Push auf main)
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
