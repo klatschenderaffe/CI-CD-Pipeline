@@ -49,16 +49,17 @@ jobs:
       - name: Terraform Validate
         run: terraform validate
 
-      # Terraform Plan ausführen (bei Pull Requests)
       - name: Terraform Plan
-        if: github.event_name == 'pull_request'
-        run: terraform plan -no-color -out=tfplan
+        run: terraform plan -out=tfplan
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve tfplan
 
         # Dateipfad anzeigen lassen um tfplan datei zu finden
       - name: Dateipfade anzeigen lassen
         run: ls -la
 
-      # Terraform Apply ausführen (bei Push auf main)
-      - name: Terraform Apply
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: terraform apply -auto-approve tfplan
+    #   # Terraform Apply ausführen (bei Push auf main)
+    #   - name: Terraform Apply
+    #     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    #     run: terraform apply -auto-approve tfplan
