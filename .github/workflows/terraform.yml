@@ -52,6 +52,9 @@ jobs:
           ls -la
           terraform init
 
+      - name: Check directory structure
+        run: ls -la ./terraform
+
       # Terraform Format prüfen
       - name: Terraform Format Check
         run: terraform fmt -check
