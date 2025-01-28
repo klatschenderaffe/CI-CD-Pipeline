@@ -37,6 +37,10 @@ jobs:
         with:
           terraform_version: 1.5.6 # Anpassen an Ihre Version
 
+      # Dateipfad wechseln
+      - name: Dateipfade wechseln
+        run: cd terraform
+
       # Terraform initialisieren
       - name: Terraform Init
         run: terraform init
@@ -54,10 +58,6 @@ jobs:
 
       - name: Terraform Apply
         run: terraform apply -auto-approve tfplan
-
-        # Dateipfad anzeigen lassen um tfplan datei zu finden
-      - name: Dateipfade anzeigen lassen
-        run: ls -la
 
     #   # Terraform Apply ausführen (bei Push auf main)
     #   - name: Terraform Apply
