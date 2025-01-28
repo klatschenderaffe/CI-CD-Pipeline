@@ -39,7 +39,7 @@ jobs:
 
       # Dateipfad wechseln
       - name: Dateipfade wechseln
-        run: cd terraform
+        run: cd ./terraform
 
       # Terraform initialisieren
       - name: Terraform Init
