@@ -1,6 +1,6 @@
 - name: Deployen der React App mit Docker
   hosts: webserver
-  become: yes
+  become: true
   collections:
     - community.docker
 
@@ -38,4 +38,4 @@
         state: started
         restart_policy: always
         published_ports:
-          - '80:80'
+          - '8080:80' # Ändern Sie den Host-Port von 80 auf einen freien Port wie 8080
