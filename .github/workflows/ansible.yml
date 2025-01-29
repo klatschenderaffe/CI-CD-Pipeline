@@ -14,4 +14,5 @@ jobs:
 
     steps:
       - name: Ansible Playbook nutzen
-        run: ansible-playbook -i ../ansible/inventory.ini playbook.yml
+        working-directory: ./ansible
+        run: ansible-playbook -i ./inventory.ini playbook.yml
