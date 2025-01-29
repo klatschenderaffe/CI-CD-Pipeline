@@ -1,0 +1,17 @@
+name: Ansible Playbook
+
+on:
+  push:
+    branches:
+      - main
+  # Ermöglicht das manuelle Auslösen des Workflows
+  workflow_dispatch:
+
+jobs:
+  ansible:
+    name: ansible playbook
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Ansible Playbook nutzen
+        run: ansible-playbook -i ../ansible/inventory.ini playbook.yml

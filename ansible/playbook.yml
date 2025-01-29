@@ -25,14 +25,14 @@
     # 4. Docker Image von Dockerhub pullen
     - name: Docker Images pullen
       community.docker.docker_image:
-        name: 'klatschenderaffe/react-app-counter'
-        tag: 1.0
+        name: 'klatschenderaffe/reactappimage'
+        tag: latest
         source: pull
     # 5. Docker Container starten
     - name: Docker Container starten
       community.docker.docker_container:
         name: react-app-container
-        image: 'klatschenderaffe/react-app-counter:1.0'
+        image: 'klatschenderaffe/reactappimage:latest'
         state: started
         restart_policy: always
         published_ports:
