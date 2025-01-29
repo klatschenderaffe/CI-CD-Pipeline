@@ -1,5 +1,5 @@
 
 # Ausgabe der öffentlichen IP-Adresse der EC2-Instanz
-output "instance_public_ip" {
+output "public_ips" {
   value = aws_instance.docker_instance.public_ip
 }
