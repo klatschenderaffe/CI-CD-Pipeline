@@ -5,11 +5,12 @@
     - community.docker
 
   tasks:
-    # 1. System aktualisieren
     - name: System aktualisieren
       yum:
         name: '*'
         state: latest
+        update_cache: true
+      become: true
     # 2. Docker installieren
     - name: Docker installieren
       yum:
