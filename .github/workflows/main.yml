@@ -50,7 +50,7 @@ jobs:
         run: ls -la
       # schritt 4: Projekt-build bauen
       - name: Image erstellen
-        run: docker buildx build -t klatschenderaffe/reactappimage .
+        run: docker buildx build -t --load klatschenderaffe/reactappimage .
       # schritt 5: build ergebnisse hochladen
       # Step 2: Log in to Docker Hub (if accessing private images)
       - name: Log in to Docker Hub
