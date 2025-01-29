@@ -6,10 +6,9 @@
 
   tasks:
     - name: System aktualisieren
-      yum:
+      package:
         name: '*'
         state: latest
-        update_cache: true
       become: true
     # 2. Docker installieren
     - name: Docker installieren
