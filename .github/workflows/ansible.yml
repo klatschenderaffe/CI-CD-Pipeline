@@ -18,10 +18,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Change Permission to .pem key
-        working-directory: ./keys
-        run: chmod 600 ./ec22.pem
-
       # SSH-Schlüssel einrichten
       - name: Set up SSH
         run: |
