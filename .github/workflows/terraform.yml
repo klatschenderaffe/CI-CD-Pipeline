@@ -46,6 +46,31 @@ jobs:
         working-directory: ./terraform
         run: terraform apply -auto-approve
 
+        # Ansible installieren
+      - name: Install Ansible
+        run: |
+          sudo apt update
+          sudo apt install -y ansible
+
+      - name: Generiere Ansible Inventory
+        working-directory: ./terraform
+        run: |
+          echo "[webserver]" >> ../ansible/inventory.ini
+          cat ../ansible/inventory.ini
+          terraform output -json >> meineOutputs.json
+          if [ -s meineOutputs.json ]; then
+          jq -r ".public_ips.value[]" meineOutputs.json >> ../ansible/inventory.ini
+          cat ../ansible/inventory.ini
+          else
+            echo "Terraform outputs are empty or invalid."
+          fi
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/private_key.pem
+          chmod 600 ~/.ssh/private_key.pem
+
   terraform_destroy:
     name: Terraform Destroy
     runs-on: ubuntu-latest

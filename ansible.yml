@@ -21,8 +21,9 @@ jobs:
       # SSH-Schlüssel einrichten
       - name: Set up SSH
         run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
-          chmod 600 private_key.pem
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/private_key.pem
+          chmod 600 ~/.ssh/private_key.pem
 
       # Ansible installieren
       - name: Install Ansible
@@ -37,4 +38,4 @@ jobs:
           ANSIBLE_HOST_KEY_CHECKING: False
         working-directory: ./ansible
         run: |
-          ansible-playbook -i inventory.ini playbook.yml --private-key private_key.pem -u ec2-user
+          ansible-playbook -i inventory.ini playbook.yml --private-key ~/.ssh/private_key.pem -u ec2-user
