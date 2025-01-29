@@ -10,7 +10,6 @@ resource "aws_instance" "docker_instance" {
     Name = "Docker-EC2-Instance"
   }
   
-  user_data = base64encode(file("${path.module}/userdata.tpl"))
 
   key_name = "ec22" # SSH-Schlüssel anpassen (optional)
 }
