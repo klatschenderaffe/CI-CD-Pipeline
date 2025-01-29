@@ -4,6 +4,11 @@
   collections:
     - community.docker
 
+  vars:
+    # Definieren Sie den Hash (z. B. GitHub-SHA). Dies sollte dynamisch gesetzt werden.
+    docker_image_tag: "{{ lookup('env', 'GITHUB_SHA') | default('latest') }}"
+    docker_image_name: 'klatschenderaffe/reactappimage'
+
   tasks:
     - name: System aktualisieren
       package:
@@ -24,17 +29,33 @@
         state: started
         enabled: true
 
-    # 4. Docker Image von Dockerhub pullen
-    - name: Docker Images pullen
+    # # 4. Docker Image von Dockerhub pullen
+    # - name: Docker Images pullen
+    #   community.docker.docker_image:
+    #     name: 'klatschenderaffe/reactappimage'
+    #     tag: latest
+    #     source: pull
+    # # 5. Docker Container starten
+    # - name: Docker Container starten
+    #   community.docker.docker_container:
+    #     name: react-app-container
+    #     image: 'klatschenderaffe/reactappimage:latest'
+    #     state: started
+    #     restart_policy: always
+    #     published_ports:
+    #       - '80:80' # Ändern Sie den Host-Port von 80 auf einen freien Port wie 8080
+    # 4. Docker Image von Dockerhub pullen mit spezifischem Tag (Hash)
+    - name: Docker Image pullen
       community.docker.docker_image:
-        name: 'klatschenderaffe/reactappimage'
-        tag: latest
+        name: '{{ docker_image_name }}'
+        tag: '{{ docker_image_tag }}'
         source: pull
-    # 5. Docker Container starten
+
+    # 5. Docker Container starten mit spezifischem Tag (Hash)
     - name: Docker Container starten
       community.docker.docker_container:
         name: react-app-container
-        image: 'klatschenderaffe/reactappimage:latest'
+        image: '{{ docker_image_name }}:{{ docker_image_tag }}'
         state: started
         restart_policy: always
         published_ports:
