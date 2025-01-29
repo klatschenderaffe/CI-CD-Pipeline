@@ -1,12 +1,12 @@
 name: Terraform CI/CD Pipeline
 
 on:
-  pull_request:
-    branches:
-      - main
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows:
+      - Test-Projects
+    types:
+      - completed
+
   # Ermöglicht das manuelle Auslösen des Workflows
   workflow_dispatch:
 
