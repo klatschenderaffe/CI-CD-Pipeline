@@ -1,0 +1,39 @@
+- name: Deployen der React App mit Docker
+  hosts: webserver
+  become: yes
+  collections:
+    - community.docker
+
+  tasks:
+    # 1. System aktualisieren
+    - name: System aktualisieren
+      yum:
+        name: '*'
+        state: latest
+    # 2. Docker installieren
+    - name: Docker installieren
+      yum:
+        name: docker
+        state: present
+    # 3. Docker starten und aktivieren
+    - name: Docker starten und aktivieren
+      systemd:
+        name: docker
+        state: started
+        enabled: true
+
+    # 4. Docker Image von Dockerhub pullen
+    - name: Docker Images pullen
+      community.docker.docker_image:
+        name: 'klatschenderaffe/react-app-counter'
+        tag: 1.0
+        source: pull
+    # 5. Docker Container starten
+    - name: Docker Container starten
+      community.docker.docker_container:
+        name: react-app-container
+        image: 'klatschenderaffe/react-app-counter:1.0'
+        state: started
+        restart_policy: always
+        published_ports:
+          - '80:80'
