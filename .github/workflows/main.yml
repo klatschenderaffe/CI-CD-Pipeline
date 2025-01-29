@@ -48,10 +48,15 @@ jobs:
 
       - name: Dateipfad anzeigen
         run: ls -la
+
+        # schritt 4: Projekt-build bauen
+      - name: Image löschen
+        run: docker rmi klatschenderaffe/reactappimage
+
       # schritt 4: Projekt-build bauen
       - name: Image erstellen
-        run: docker buildx build -t --load klatschenderaffe/reactappimage .
-      # schritt 5: build ergebnisse hochladen
+        run: docker buildx build -t klatschenderaffe/reactappimage .
+
       # Step 2: Log in to Docker Hub (if accessing private images)
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
