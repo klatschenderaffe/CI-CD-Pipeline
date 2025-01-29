@@ -1,13 +1,39 @@
-name: Ansible files & Deployment
+name: Deploy with Ansible
 
 on:
   push:
-    branches: -main
+    branches:
+      - main
   pull_request:
-    branches: -main
+    branches:
+      - main
 
 jobs:
-  ansible-lint:
-    uses: ansible/ansible-content-actions/.github/workflows/ansible_lint.yaml@main
-    with:
-      args: '-p playbooks'
+  deploy:
+    name: Run Ansible Playbook
+    runs-on: ubuntu-latest
+
+    steps:
+      # Repository auschecken
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # SSH-Schlüssel einrichten
+      - name: Set up SSH
+        run: |
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
+
+      # Ansible installieren
+      - name: Install Ansible
+        run: |
+          sudo apt update
+          sudo apt install -y ansible
+
+      # Ansible Playbook ausführen
+      - name: Run Ansible Playbook
+        env:
+          ANSIBLE_USER: ec2-user
+          ANSIBLE_HOST_KEY_CHECKING: False
+        run: |
+          ansible-playbook -i inventory.ini playbook.yml --private-key private_key.pem -u ec2-user
