@@ -49,10 +49,6 @@ jobs:
       - name: Dateipfad anzeigen
         run: ls -la
 
-        # schritt 4: Projekt-build bauen
-      - name: Image löschen
-        run: docker rmi klatschenderaffe/reactappimage
-
       # schritt 4: Projekt-build bauen
       - name: Image erstellen
         run: docker buildx build -t klatschenderaffe/reactappimage .
@@ -64,7 +60,7 @@ jobs:
           username: klatschenderaffe
           password: ${{ secrets.PASSWORD }}
       - name: Image pushen
-        run: docker push klatschenderaffe/reactappimage
+        run: docker push -a klatschenderaffe/reactappimage
 
   # deploy:
   #   runs-on: ubuntu-latest
