@@ -1,18 +1,15 @@
-name: Ansible Playbook
+name: Ansible files & Deployment
 
 on:
   push:
-    branches:
-      - main
-  # Ermöglicht das manuelle Auslösen des Workflows
-  workflow_dispatch:
+    paths:
+      - 'ansible/**'
+  pull_request:
+    paths:
+      - 'ansible/**'
 
 jobs:
-  ansible:
-    name: ansible playbook
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Ansible Playbook nutzen
-        working-directory: ./ansible
-        run: ansible-playbook -i ./inventory.ini playbook.yml
+  ansible-lint:
+    uses: ansible/ansible-content-actions/.github/workflows/ansible_lint.yaml@main
+    with:
+      args: '-p playbooks'
