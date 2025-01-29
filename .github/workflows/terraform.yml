@@ -78,7 +78,7 @@ jobs:
           ANSIBLE_HOST_KEY_CHECKING: False
         working-directory: ./ansible
         run: |
-          ansible-playbook -i ./inventory.ini ./playbook.yml --private-key ~/.ssh/private_key.pem -u ubuntu
+          ansible-playbook -i ./inventory.ini ./playbook.yml --ssh-common-args='-o StrictHostKeyChecking=no' -v
 
   terraform_destroy:
     name: Terraform Destroy
