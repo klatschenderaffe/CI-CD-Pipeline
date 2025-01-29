@@ -12,9 +12,10 @@
       become: true
     # 2. Docker installieren
     - name: Docker installieren
-      yum:
+      package:
         name: docker
         state: present
+      become: true
     # 3. Docker starten und aktivieren
     - name: Docker starten und aktivieren
       systemd:
